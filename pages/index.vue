@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       slideList: [],
-       currentTab: 0,
+      currentTab: 0,
       // tab栏的数据
       tabs: [
         { name: "攻略", placeholder: "搜索城市" },
@@ -55,19 +55,16 @@ export default {
     };
   },
   methods: {
- 
-          // tab栏切换
-    handleChangeTab(index){
-
+    // tab栏切换
+    handleChangeTab(index) {
       // 如果是点击的机票，跳转到机票页面
-      if(index === 2){
+      if (index === 2) {
         this.$router.push("/air");
       }
 
       // 修改当前高亮
       this.currentTab = index;
     }
-    
   },
   mounted() {
     // 把axios绑定到原型上
@@ -86,7 +83,7 @@ export default {
 };
 </script>
 
-<style lang="less" scope>
+<style lang="less" scoped>
 .container {
   min-width: 1000px;
   margin: 0 auto;
