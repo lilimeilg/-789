@@ -36,5 +36,23 @@ export const actions = {
       store.commit("setUserInfo", res.data);
       return res.data;
     });
+  },
+  // 发送验证码
+  sendCode(store,phoneNumber){
+  return  this.$axios({
+    url:"/captchas",
+    method:"POST",
+    data:{
+      tel:phoneNumber
+    }
+  }).then(res=>{
+    console.log(res);
+    const {code}=res.data
+    return code
+  })
+  },
+  // 注册
+  register(store,data){
+
   }
 };
