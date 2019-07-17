@@ -22,14 +22,17 @@
 
         <div class="history">
             <h5>历史查询</h5>
-            <nuxt-link to="#">
+            <!-- 拼接参数 -->
+            <nuxt-link :to="`/air/flights?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`"
+            v-for="(item,index) in airsLog"
+            :key="index">
                 <el-row type="flex" 
                 justify="space-between" 
                 align="middle"
                 class="history-item">
                     <div class="air-info">
-                        <div class="to-from">广州 - 上海</div>
-                        <p>2019-06-16</p>
+                        <div class="to-from"> {{item.departCity}} - {{item.destCity}}</div>
+                        <p>{{item.departDate}}</p>
                     </div>
                     <span>选择</span>
                 </el-row>
@@ -40,7 +43,15 @@
 
 <script>
 export default {
-
+    data(){
+        return{
+            airsLog:[]
+        }
+    },
+mounted(){
+// 挂载后获取历史数据
+this.airsLog=JSON.parse(localStorage.getItem("airs")||`[]`)
+}
 }
 </script>
 

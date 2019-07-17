@@ -78,23 +78,28 @@ export default {
       this.flightsData.flights = arr;
       // 重新给返回的总数据赋值
       this.total = this.flightsData.flights.length;
+    },
+    // 封装获取数据的方法
+    getDate() {
+      this.$axios({
+        url: "airs",
+        params: this.$route.query
+      }).then(res => {
+        console.log(res);
+        this.flightsData = res.data;
+        this.cacheFlightsData = { ...res.data };
+        // this.dataList = res.data.flights;
+        // 总的航班信息
+        this.total = this.flightsData.flights.length;
+        // 第一页的数据
+        // this.dataList = this.flightsData.flights.slice(0, this.pageSize);
+        console.log(this.dataList);
+      });
     }
   },
   mounted() {
-    this.$axios({
-      url: "airs",
-      params: this.$route.query
-    }).then(res => {
-      console.log(res);
-      this.flightsData = res.data;
-      this.cacheFlightsData = { ...res.data };
-      // this.dataList = res.data.flights;
-      // 总的航班信息
-      this.total = this.flightsData.flights.length;
-      // 第一页的数据
-      // this.dataList = this.flightsData.flights.slice(0, this.pageSize);
-      console.log(this.dataList);
-    });
+    // 调用获取数据的方法
+    this.getDate();
   },
   computed: {
     // 当前页面渲染的列表数据
@@ -103,6 +108,11 @@ export default {
         (this.pageIndex - 1) * this.pageSize,
         this.pageSize * this.pageIndex
       );
+    }
+  },
+  watch: {
+    $route() {
+      this.getDate();
     }
   }
 };

@@ -208,6 +208,16 @@ export default {
           });
         }
       });
+      // 把搜索的数据保存到本地
+      // 把数据转换成数组，如果没有数据就是空的数组
+      const airs=JSON.parse(localStorage.getItem("airs")||`[]`)
+      // 把数据添加到新数组中
+      airs.unshift(this.form)
+      localStorage.setItem("airs",JSON.stringify(airs))
+      this.$router.push({
+        path:"/air/flights",
+        query:this.form
+      })
     },
     // 城市切换
     handleReverse() {
