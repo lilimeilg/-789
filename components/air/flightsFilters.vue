@@ -83,24 +83,23 @@ export default {
       const arr = this.data.flights.filter(v => {
         return v.org_airport_name === value;
       });
-    //   console.log(arr);
+      //   console.log(arr);
       this.$emit("changeDataList", arr);
     },
 
     // 选择出发时间时候触发
     handleFlightTimes(value) {
-    //   console.log("选择出发时间触发");
-      const[from,to]=value.split(",")
-      const arr=this.data.flights.filter(v=>{
+      //   console.log("选择出发时间触发");
+      const [from, to] = value.split(",");
+      const arr = this.data.flights.filter(v => {
         //   获取出发时间
-          const [start]=v.dep_time.split(":")
+        const [start] = v.dep_time.split(":");
         //   字符串转数字后比较，解决0-6点显示所有数据的bug
-          return  Number(from)<=Number(start) && Number(start)<Number(to)
+        return Number(from) <= Number(start) && Number(start) < Number(to);
         //   console.log(start);
+      });
 
-      })
-      
-    //   console.log(arr);
+      //   console.log(arr);
       this.$emit("changeDataList", arr);
     },
 
@@ -115,7 +114,7 @@ export default {
 
     // 选择机型时候触发
     handleAirSize(value) {
-    //   console.log("选择机型时候触发");
+      //   console.log("选择机型时候触发");
       const arr = this.data.flights.filter(v => {
         return v.plane_size === value;
       });
@@ -124,7 +123,14 @@ export default {
 
     // 撤销条件时候触发
     handleFiltersCancel() {
-      console.log("撤销条件候触发");
+      //   console.log("撤销条件候触发");
+    //   初始化所有的数据，还原数据列表
+      this.airport = "";
+      this.flightTimes = "";
+      this.company = "";
+      this.airSize = "";
+
+      this.$emit("changeDataList", this.data.flights);
     }
   }
 };

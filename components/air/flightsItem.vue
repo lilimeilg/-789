@@ -47,7 +47,7 @@
             </el-col>
             <el-col :span="5" class="price">￥{{item.org_settle_price}}</el-col>
             <el-col :span="3" class="choose-button">
-              <el-button type="warning" size="mini">选定</el-button>
+              <el-button type="warning" size="mini" @click="handleChoose(data.id,item.seat_xid)">选定</el-button>
               <p>剩余：{{item.discount}}</p>
             </el-col>
           </el-row>
@@ -83,6 +83,19 @@ export default {
           }
           return `${Math.floor(dis/60)}时${(dis%60)}分`
       }
+  },
+  methods:{
+    // 跳转到订单页面
+            // 选定按钮触发跳转
+        handleChoose(id, seatId){
+            this.$router.push({
+                path: "/air/order", 
+                query: {
+                    id,
+                    seat_xid: seatId
+                }
+            })
+        },
   }
 };
 </script>

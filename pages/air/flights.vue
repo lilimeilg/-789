@@ -4,8 +4,8 @@
       <!-- 顶部过滤列表 -->
       <div class="flights-content">
         <!-- 过滤条件 -->
-        
-        <FlightsFilters  :data="cacheFlightsData" @changeDataList="changeDataList" />
+
+        <FlightsFilters :data="cacheFlightsData" @changeDataList="changeDataList" />
         <!-- 航班头部布局 -->
         <FlighsListHead />
 
@@ -26,6 +26,7 @@
       <!-- 侧边栏 -->
       <div class="aside">
         <!-- 侧边栏组件 -->
+        <FlightsAside />
       </div>
     </el-row>
   </section>
@@ -35,30 +36,31 @@
 import moment from "moment";
 import FlighsListHead from "@/components/air/flightsListHead";
 import FlightsItem from "@/components/air/flightsItem";
-import FlightsFilters from "@/components/air/flightsFilters.vue"
+import FlightsFilters from "@/components/air/flightsFilters.vue";
+import FlightsAside from "@/components/air/flightsAside.vue";
 export default {
   components: {
     FlighsListHead,
     FlightsItem,
-    FlightsFilters
+    FlightsFilters,
+    FlightsAside
   },
   data() {
     return {
       flightsData: {
         flights: [],
-        info:{},
-        options:{}
-
+        info: {},
+        options: {}
       }, // 航班总数据
       // dataList: []   ,  // 航班列表数据
       pageIndex: 1,
       pageSize: 5,
       total: 0,
       // 系统缓存一份最初的数据，不进行任何改变的
-      cacheFlightsData:{
+      cacheFlightsData: {
         flights: [],
-        info:{},
-        options:{}
+        info: {},
+        options: {}
       }
     };
   },
@@ -72,10 +74,10 @@ export default {
       this.pageIndex = value;
     },
     // 传递给子组件，用于修改dataList
-    changeDataList( arr ){
-        this.flightsData.flights = arr;
-        // 重新给返回的总数据赋值
-         this.total = this.flightsData.flights.length;
+    changeDataList(arr) {
+      this.flightsData.flights = arr;
+      // 重新给返回的总数据赋值
+      this.total = this.flightsData.flights.length;
     }
   },
   mounted() {
@@ -85,7 +87,7 @@ export default {
     }).then(res => {
       console.log(res);
       this.flightsData = res.data;
-      this.cacheFlightsData={...res.data}
+      this.cacheFlightsData = { ...res.data };
       // this.dataList = res.data.flights;
       // 总的航班信息
       this.total = this.flightsData.flights.length;
@@ -101,9 +103,7 @@ export default {
         (this.pageIndex - 1) * this.pageSize,
         this.pageSize * this.pageIndex
       );
-     
-    },
-   
+    }
   }
 };
 </script>
